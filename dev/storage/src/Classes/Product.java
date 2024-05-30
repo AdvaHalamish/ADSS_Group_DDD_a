@@ -44,10 +44,11 @@ public class Product {
         }
 
     }
+//TODO CHANGE
 
     public void removeItem(Item del_item) {
         if (del_item != null && items.containsKey(del_item.getItem_code())) {
-            items.remove(del_item);
+            items.remove(del_item.getItem_code());
             if (del_item.getStored() == ItemPlace.Store)
                 quantityInStore--;
             if (del_item.getStored() == ItemPlace.Warehouse)
@@ -69,13 +70,17 @@ public class Product {
         return quantityInStore + quantityInWarehouse;
     }
 
+
+    //TODO CHANGE
     public void applyDiscount(Discount new_discount) {
-        if (discount.isDiscountActive()) {
-            for (int i = 0; i <= items.size(); i++) {
-                items.get(i).setSellingPrice(items.get(i).getCostPrice() * (1 - new_discount.getDiscountRate()));
+        if (new_discount.isDiscountActive()) {
+            for (Item item : items.values()) {
+                double discountedPrice = item.getCostPrice() * (1 - new_discount.getDiscountRate());
+                item.setSellingPrice(discountedPrice);
             }
         }
     }
+
 
     public void check_quantity(){
         if (getTotalQuantity() < minimumQuantityForAlert) {

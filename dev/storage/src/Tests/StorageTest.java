@@ -64,4 +64,35 @@ public class StorageTest {
         storage.deleteProduct("Item1");
         assertNull(storage.getProductByName("Code1"));
     }
+//    @Test
+//    public void testGetCategory() {
+//        assertEquals("Category1",  product.getCategory());
+//    }
+//
+//    @Test
+//    public void testGetSubCategory() {
+//        assertEquals("SubCategory1", product.getSubCategory());
+//    }
+//
+//    @Test
+//    public void testGetSize() {
+//        assertEquals(1.0, product.getSize(), 0);
+//    }
+//
+//    @Test
+//    public void testGetProductName() {
+//        assertEquals("Item1", product.getProductName());
+//    }
+//
+//    @Test
+//    public void testGetQuantityInStore() {
+//        assertEquals(1, product.getQuantityInStore());
+//    }
+//
+//    @Test
+//    public void testGetQuantityInWarehouse() {
+//        product.addItem(item2);
+//        assertEquals(1, product.getQuantityInWarehouse());
+//    }
+
 }

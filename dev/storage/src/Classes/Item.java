@@ -24,7 +24,7 @@ public class Item {
      * Constructs a new Classes.Item object with the given parameters.
      *
      * @param Item_name: the name of the Classes.Item
-     * @param costPrice: the costPrice of the Classes.Item
+     * @param othercostPrice: the costPrice of the Classes.Item
      * sellingPrice: the default is costPrice of the Classes.Item
      * @param stored: the place stored of the Classes.Item
      * @param expirationDate: the expirationDate of the Classes.Item
@@ -34,10 +34,10 @@ public class Item {
      * @param sub_category: the sub-category of the Classes.Item
      * @param size: the size of the Classes.Item
      */
-    public Item(String Item_name, double costPrice, String manufacturer, String Item_code, String category, String sub_category, double size, ItemPlace stored, LocalDate expirationDate, ItemStatus status) {
+    public Item(String Item_name, double othercostPrice, String manufacturer, String Item_code, String category, String sub_category, double size, ItemPlace stored, LocalDate expirationDate, ItemStatus status) {
         this.Item_name = Item_name;
-        this.costPrice = costPrice;
-        this.sellingPrice = costPrice;
+        this.costPrice = othercostPrice;
+        this.sellingPrice = othercostPrice;
         this.manufacturer = manufacturer;
         this.Item_code = Item_code;
         this.category = category;

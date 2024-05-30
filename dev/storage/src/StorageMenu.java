@@ -1,18 +1,36 @@
-package Tests;
-
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.TimerTask;
+import java.util.Timer;
+import java.util.TimerTask;
 import Classes.*;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import Tests.*;
 
 
 public class StorageMenu {
     private static Storage storage = new Storage();
 
     public static void main(String[] args) {
-        runTests();
+//        runTests();
+        // Creating a Timer object
+        Timer timer = new Timer();
+
+        // Defining a task for printing the weekly report
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                // Call the function or perform the required logic for printing the report
+                printWeeklyReport();
+            }
+        };
+
+        // Scheduling the task to run every week
+        timer.schedule(task, 0, 7 * 24 * 60 * 60 * 1000); // Immediate execution and then every week
+
+
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -49,6 +67,10 @@ public class StorageMenu {
             }
         } while (choice != 5);
         scanner.close();
+    }
+    //TODO CONTEMPLATE
+    private static void printWeeklyReport() {
+        showDefectiveItems();
     }
 
     private static void intelize_storage() {
@@ -371,37 +393,18 @@ public class StorageMenu {
             System.out.println("Product: " + product.getProductName() + ", No active discount.");
         }
     }
-
-    private static void runTests() {
-        System.out.println("\nRunning tests...");
-        Result result1 = JUnitCore.runClasses(ItemTest.class);
-        Result result2 = JUnitCore.runClasses(ProductTest.class);
-        Result result3 = JUnitCore.runClasses(StorageTest.class);
-        if (result1.wasSuccessful()) {
-            System.out.println("All tests passed!");
-        } else {
-            System.out.println("Tests failed:");
-            for (Failure failure : result1.getFailures()) {
-                System.out.println(failure.toString());
-            }
-        }
-        if (result2.wasSuccessful()) {
-            System.out.println("All tests passed!");
-        } else {
-            System.out.println("Tests failed:");
-            for (Failure failure : result2.getFailures()) {
-                System.out.println(failure.toString());
-            }
-        }
-        if (result3.wasSuccessful()) {
-            System.out.println("All tests passed!");
-        } else {
-            System.out.println("Tests failed:");
-            for (Failure failure : result3.getFailures()) {
-                System.out.println(failure.toString());
-            }
-        }
-    }
-
 }
-
+//
+//    private static void runTests() {
+//        System.out.println("\nRunning tests...");
+//        Result result = JUnitCore.runClasses(Tests.class);
+//
+//        if (result.wasSuccessful()) {
+//            System.out.println("All tests passed!");
+//        } else {
+//            System.out.println("Tests failed:");
+//            for (Failure failure : result.getFailures()) {
+//                System.out.println(failure.toString());
+//            }
+//
+//}
