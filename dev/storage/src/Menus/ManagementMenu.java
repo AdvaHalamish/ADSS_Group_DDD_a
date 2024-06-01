@@ -17,7 +17,7 @@ public class ManagementMenu {
         int choice;
         do {
             System.out.println("\nManagement Menu");
-            System.out.println("1. Show Items");
+            System.out.println("1. Show All Items");
             System.out.println("2. Show All Products");
             System.out.println("3. Show items in categories");
             System.out.println("4. Show items by status");
@@ -75,7 +75,7 @@ public class ManagementMenu {
         });
     }
     private void showAllProducts() {
-        System.out.println("\nAll Products:");
+        System.out.println("\nAll Products In Storage:");
         for (Product product : storage.getAllProducts()) {
             if(product.getStatus().equals(ProductStatus.InStorage)) {
                 System.out.println("Product: " + product.getProductName());
