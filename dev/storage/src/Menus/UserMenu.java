@@ -34,6 +34,9 @@ public class UserMenu {
                         showItemsInCategoriesMenu(scanner);
                         break;
                     case 3:
+                        showProductDetails(scanner);
+                        break;
+                    case 4:
                         System.out.println("Exiting...");
                         break;
                     default:
@@ -110,6 +113,16 @@ public class UserMenu {
                     System.out.println(item);
                 }
             }
+        }
+    }
+    private void showProductDetails(Scanner scanner) {
+        System.out.print("Enter Product name: ");
+        String ProductName = scanner.nextLine();
+        Product product = storage.getProductByName(ProductName);
+        if (product != null) {
+            System.out.println("Product details: " + product);
+        } else {
+            System.out.println("Product not found.");
         }
     }
 }
