@@ -11,15 +11,6 @@ public class Storage {
         allProducts = new ArrayList<>();
     }
 
-    public void deleteProduct(String name_product) {
-        for (Product product : allProducts) {
-            if (product.getProductName().equals(name_product)) {
-                allProducts.remove(product);
-                break;
-            }
-        }
-    }
-
     public Product getProductByName(String name_product) {
         Product getproduct = null;
         for (Product product : allProducts) {
@@ -50,19 +41,15 @@ public class Storage {
             allProducts.add(newProduct);
         }
     }
-   /*  public void deleteItem(String name_code) {
+     public void removeItem(String name_code, ItemStatus status) {
         for (Product product : allProducts) {
             Item item = product.getItems().get(name_code);
             if (item != null) {
-                product.removeItem(item,);
-                if (product.getItems().isEmpty()) {
-                    allProducts.remove(product);
-                }
+                product.removeItem(item,status);
                 break;
             }
         }
-        amount--;
-    }*/
+    }
 
     public List<Product> getProductsBySubCategory(String subCategory) {
         return allProducts.stream()

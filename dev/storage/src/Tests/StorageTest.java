@@ -57,16 +57,6 @@ public class StorageTest {
     }
 
     @Test
-    public void testDeleteProduct() {
-        storage.insertItem(item1);
-        storage.insertItem(item2);
-        storage.insertItem(item3);
-
-        storage.deleteProduct("Item1");
-        assertNull(storage.getProductByName("Code1"));
-    }
-
-    @Test
     public void testGetProductName() {
         storage.insertItem(item1);
         assertEquals("Item1", storage.getProductByName(item1.getItem_name()).getProductName());
@@ -75,21 +65,21 @@ public class StorageTest {
     @Test
     public void testGetQuantityInStore() {
         storage.insertItem(item1);
-        assertEquals(1, storage.getProductByName("Item1").getQuantityInStore());
+        assertEquals(1,storage.TotalQuantityInStore());
     }
 
     @Test
     public void testGetQuantityInWarehouse() {
         storage.insertItem(item2);
-        assertEquals(1, storage.getProductByName("Item2").getQuantityInWarehouse());
+        assertEquals(1,storage.TotalQuantityInWareHouse());
     }
 
     @Test
     public void testRemoveItem() {
         storage.insertItem(item2);
-        assertEquals(1, storage.getAmount());
-        storage.deleteItem(item2.getItem_code());
-        assertEquals(0, storage.getAmount());
+        assertEquals(1, storage.TotalQuantity());
+        storage.removeItem(item2.getItem_code(),ItemStatus.Defective);
+        assertEquals(0, storage.TotalQuantity());
     }
 
     @Test

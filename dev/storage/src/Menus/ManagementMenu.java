@@ -25,7 +25,8 @@ public class ManagementMenu {
             System.out.println("6. Details about a specific item");
             System.out.println("7. Apply Discount");
             System.out.println("8. Generate Report");
-            System.out.println("9. Exit");
+            System.out.println("9. View Total Amount in Storage");
+            System.out.println("10. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
@@ -60,11 +61,14 @@ public class ManagementMenu {
                 case 9:
                     System.out.println("Exiting...");
                     break;
+                case 10:
+                    displayTotalAmountInStorage();
+                    break;
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 10.");
                     break;
             }
-        } while (choice != 9);
+        } while (choice != 10);
     }
 
     private void showAllItems() {
@@ -224,5 +228,15 @@ public class ManagementMenu {
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
+    }
+    public void displayTotalAmountInStorage() {
+        int totalQuantity = storage.TotalQuantity();
+        int totalQuantityInStore = storage.TotalQuantityInStore();
+        int totalQuantityInWarehouse = storage.TotalQuantityInWareHouse();
+
+        System.out.println("Total Amount in Storage:");
+        System.out.println("Total Quantity: " + totalQuantity);
+        System.out.println("Total Quantity in Store: " + totalQuantityInStore);
+        System.out.println("Total Quantity in Warehouse: " + totalQuantityInWarehouse);
     }
 }

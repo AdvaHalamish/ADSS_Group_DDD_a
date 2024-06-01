@@ -20,10 +20,9 @@ public class WorkerMenu {
         int choice;
         do {
             System.out.println("\nWorker Menu");
-            System.out.println("1. Update Defective Item");
-            System.out.println("2. Update Sold out Item");
-            System.out.println("3. Generate Report for Products Below Minimum Quantity");
-            System.out.println("4. Exit");
+            System.out.println("1. Update Item Status");
+            System.out.println("2. Generate Report for Products Below Minimum Quantity");
+            System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -33,12 +32,9 @@ public class WorkerMenu {
                     deleteItem(scanner);
                     break;
                 case 2:
-                    updateDefectiveItem(scanner);
-                    break;
-                case 3:
                     generateBelowMinimumReport();
                     break;
-                case 4:
+                case 3:
                     System.out.println("Exiting Worker Menu...");
                     break;
                 default:
@@ -48,22 +44,12 @@ public class WorkerMenu {
     }
 
     private void deleteItem(Scanner scanner) {
-        System.out.print("Enter item code to delete: ");
+        System.out.print("Enter item code to remove: ");
         String code = scanner.nextLine();
-        storage.deleteItem(code);
-        System.out.println("Item deleted.");
-    }
-
-    private void updateDefectiveItem(Scanner scanner) {
-        System.out.print("Enter item code to update as defective: ");
-        String code = scanner.nextLine();
-        Item item = storage.getProductByName(code).getItems().get(code);
-        if (item != null) {
-            item.setStatus(ItemStatus.Defective);
-            System.out.println("Item status updated to defective.");
-        } else {
-            System.out.println("Item not found.");
-        }
+        System.out.print("Enter new status to the item: (Defective, Soldout, Expired) ");
+        String status = scanner.nextLine();
+        storage.removeItem(code, ItemStatus.valueOf(status));
+        System.out.println("Item Status changed.");
     }
 
     private void generateBelowMinimumReport() {
