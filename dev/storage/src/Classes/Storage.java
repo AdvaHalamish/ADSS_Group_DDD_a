@@ -6,13 +6,12 @@ import java.util.stream.Collectors;
 
 public class Storage {
     private List<Product> allProducts;
-    public int amount;
-    public Storage(){
-        allProducts=new ArrayList<>();
-        amount=0;
+
+    public Storage() {
+        allProducts = new ArrayList<>();
     }
 
-    public void deleteProduct (String name_product) {
+    public void deleteProduct(String name_product) {
         for (Product product : allProducts) {
             if (product.getProductName().equals(name_product)) {
                 allProducts.remove(product);
@@ -20,11 +19,12 @@ public class Storage {
             }
         }
     }
-    public Product getProductByName(String name_product){
-        Product getproduct=null;
+
+    public Product getProductByName(String name_product) {
+        Product getproduct = null;
         for (Product product : allProducts) {
             if (product.getProductName().equals(name_product)) {
-                getproduct=product;
+                getproduct = product;
             }
         }
         return getproduct;
@@ -49,13 +49,12 @@ public class Storage {
             newProduct.addItem(newItem);
             allProducts.add(newProduct);
         }
-        amount++;
     }
-     public void deleteItem(String name_code) {
+   /*  public void deleteItem(String name_code) {
         for (Product product : allProducts) {
             Item item = product.getItems().get(name_code);
             if (item != null) {
-                product.removeItem(item);
+                product.removeItem(item,);
                 if (product.getItems().isEmpty()) {
                     allProducts.remove(product);
                 }
@@ -63,7 +62,7 @@ public class Storage {
             }
         }
         amount--;
-    }
+    }*/
 
     public List<Product> getProductsBySubCategory(String subCategory) {
         return allProducts.stream()
@@ -91,11 +90,94 @@ public class Storage {
                 .collect(Collectors.toList());
     }
 
+    // Generate report for products below the minimum quantity
+    public List<Product> generateBelowMinimumReport() {
+        return allProducts.stream()
+                .filter(product -> product.getTotalQuantity() < product.getMinimumQuantityForAlert())
+                .collect(Collectors.toList());
+    }
+
+    // Apply discount to specific category or products
+    public void applyDiscountToCategory(String category, Discount discount) {
+        for (Product product : allProducts) {
+            if (product.getCategory().equalsIgnoreCase(category)) {
+                product.applyDiscount(discount);
+            }
+        }
+    }
+
+    public void applyDiscountToProduct(String productName, Discount discount) {
+        for (Product product : allProducts) {
+            if (product.getProductName().equalsIgnoreCase(productName)) {
+                product.applyDiscount(discount);
+            }
+        }
+    }
+
     public List<Product> getAllProducts() {
         return allProducts;
     }
 
-    public int getAmount() {
-        return amount;
+    public List<Product> getProductsByCategory(String category) {
+        return allProducts.stream()
+                .filter(product -> product.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+    }
+
+    public List<Item> getItemsByStatus(ItemStatus status) {
+        List<Item> itemsByStatus = new ArrayList<>();
+        for (Product product : allProducts) {
+            for (Item item : product.getItems().values()) {
+                if (item.getStatus() == status) {
+                    itemsByStatus.add(item);
+                }
+            }
+        }
+        return itemsByStatus;
+    }
+
+    public List<Item> getItemsByPlace(ItemPlace place) {
+        List<Item> itemsByPlace = new ArrayList<>();
+        for (Product product : allProducts) {
+            for (Item item : product.getItems().values()) {
+                if (item.getStored() == place) {
+                    itemsByPlace.add(item);
+                }
+            }
+        }
+        return itemsByPlace;
+    }
+
+    public Item getItemByCode(String itemCode) {
+        for (Product product : allProducts) {
+            for (Item item : product.getItems().values()) {
+                if (item.getItem_code().equals(itemCode)) {
+                    return item;
+                }
+            }
+        }
+        return null; // Item not found
+    }
+
+    public int TotalQuantity() {
+        int sum = 0;
+        for (Product product : allProducts) {
+            sum+=product.getTotalQuantity();
+        }
+        return sum;
+    }
+    public int TotalQuantityInStore() {
+        int sum = 0;
+        for (Product product : allProducts) {
+            sum+=product.getQuantityInStore();
+        }
+        return sum;
+    }
+    public int TotalQuantityInWareHouse() {
+        int sum = 0;
+        for (Product product : allProducts) {
+            sum+=product.getQuantityInWarehouse();
+        }
+        return sum;
     }
 }

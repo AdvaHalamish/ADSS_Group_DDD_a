@@ -138,7 +138,15 @@ public class Item {
      *
      */
     public boolean isExpired() {
-        return LocalDate.now().isAfter(expirationDate);
+        if(LocalDate.now().isAfter(expirationDate)) {
+            setStatus(ItemStatus.Expired);
+            return true;
+        }
+        return false;
+    }
+
+    public void setStatus(ItemStatus status) {
+        this.status = status;
     }
 
     public String getItem_name() {

@@ -11,6 +11,7 @@ public class Product {
     private String productName;
     private String category;
     private String sub_category;
+    private ProductStatus status;
     private double size;
 
 
@@ -21,6 +22,7 @@ public class Product {
         category=firstItem.getCategory();
         sub_category=firstItem.getSub_category();
         size=firstItem.getSize();
+        status=ProductStatus.InStorage;
     }
     public void set_minimum(int minimum){
         minimumQuantityForAlert=minimum;
@@ -45,17 +47,20 @@ public class Product {
         }
 
     }
-//TODO CHANGE
-
-    public void removeItem(Item del_item) {
-        if (del_item != null && items.containsKey(del_item.getItem_code())) {
-            items.remove(del_item.getItem_code());
-            if (del_item.getStored() == ItemPlace.Store)
+    public void removeItem(Item item, ItemStatus Itemstatus) {
+        if (item != null && items.containsKey(item.getItem_code())) {
+            item.setStatus(Itemstatus); // Change status to "Removed"
+            // Update quantity and amounts in other classes accordingly
+            if (item.getStored() == ItemPlace.Store) {
                 quantityInStore--;
-            if (del_item.getStored() == ItemPlace.Warehouse)
+            } else if (item.getStored() == ItemPlace.Warehouse) {
                 quantityInWarehouse--;
+            }
         }
-
+        check_quantity();
+        if(getTotalQuantity()<=0){
+            status=ProductStatus.NotinStorage;
+        }
     }
 
     public int getQuantityInWarehouse() {
@@ -72,7 +77,6 @@ public class Product {
     }
 
 
-    //TODO CHANGE
     public void applyDiscount(Discount new_discount) {
         if (new_discount.isDiscountActive()) {
             for (Item item : items.values()) {
@@ -105,13 +109,12 @@ public class Product {
         return productName;
     }
 
-    public Boolean getifDiscount(){
-        if(discount==null)
-            return false;
-        return true;
-    }
 
     public Discount getDiscount() {
         return discount;
+    }
+
+    public ProductStatus getStatus() {
+        return status;
     }
 }
