@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 public class Storage {
     private List<Product> allProducts;
+    public int amount;
     public Storage(){
         allProducts=new ArrayList<>();
+        amount=0;
     }
 
     public void deleteProduct (String name_product) {
@@ -47,6 +49,20 @@ public class Storage {
             newProduct.addItem(newItem);
             allProducts.add(newProduct);
         }
+        amount++;
+    }
+     public void deleteItem(String name_code) {
+        for (Product product : allProducts) {
+            Item item = product.getItems().get(name_code);
+            if (item != null) {
+                product.removeItem(item);
+                if (product.getItems().isEmpty()) {
+                    allProducts.remove(product);
+                }
+                break;
+            }
+        }
+        amount--;
     }
 
     public List<Product> getProductsBySubCategory(String subCategory) {
@@ -77,5 +93,9 @@ public class Storage {
 
     public List<Product> getAllProducts() {
         return allProducts;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

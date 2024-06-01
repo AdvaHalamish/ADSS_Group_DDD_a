@@ -13,6 +13,7 @@ public class StorageTest {
     private Item item2;
     private Item item3;
 
+
     @BeforeEach
     public void setUp() {
         storage = new Storage();
@@ -82,5 +83,21 @@ public class StorageTest {
         storage.insertItem(item2);
         assertEquals(1, storage.getProductByName("Item2").getQuantityInWarehouse());
     }
+
+    @Test
+    public void testRemoveItem() {
+        storage.insertItem(item2);
+        assertEquals(1, storage.getAmount());
+        storage.deleteItem(item2.getItem_code());
+        assertEquals(0, storage.getAmount());
+    }
+
+    @Test
+    public void testGetTotalQuantity() {
+        storage.insertItem(item1);
+        storage.insertItem(item2);
+        assertEquals(2, storage.getProductByName(item1.getItem_name()).getTotalQuantity());
+    }
+
 
 }
