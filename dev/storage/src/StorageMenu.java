@@ -394,17 +394,3 @@ public class StorageMenu {
         }
     }
 }
-//
-//    private static void runTests() {
-//        System.out.println("\nRunning tests...");
-//        Result result = JUnitCore.runClasses(Tests.class);
-//
-//        if (result.wasSuccessful()) {
-//            System.out.println("All tests passed!");
-//        } else {
-//            System.out.println("Tests failed:");
-//            for (Failure failure : result.getFailures()) {
-//                System.out.println(failure.toString());
-//            }
-//
-//}

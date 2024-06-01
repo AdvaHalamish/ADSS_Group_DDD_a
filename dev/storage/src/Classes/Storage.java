@@ -61,7 +61,6 @@ public class Storage {
                 .collect(Collectors.toList());
     }
 
-    // מתודה להפקת דו"ח מוצרים שפג תוקפם
     public List<Item> generateExpiredProductsReport() {
         return allProducts.stream()
                 .flatMap(product -> product.getItems().values().stream())  // שינוי כאן
@@ -69,7 +68,6 @@ public class Storage {
                 .collect(Collectors.toList());
     }
 
-    // מתודה להפקת דו"ח מוצרים פגומים
     public List<Item> generateDefectiveProductsReport() {
         return allProducts.stream()
                 .flatMap(product -> product.getItems().values().stream())  // שינוי כאן

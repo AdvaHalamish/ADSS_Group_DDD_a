@@ -13,6 +13,7 @@ public class Product {
     private String sub_category;
     private double size;
 
+
     public Product(Item firstItem) {
         this.items = new HashMap<>();
         addItem(firstItem);
