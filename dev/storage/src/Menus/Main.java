@@ -3,6 +3,7 @@ package Menus;
 import Classes.Storage;
 import Utils.Database;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int choice=0;
         storage= Storage.getInstance();
         initializeSystem();
 
@@ -22,13 +23,13 @@ public class Main {
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
 
-            if (scanner.hasNextInt()) {
+            try {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
-            } else {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer choice.");
                 scanner.nextLine(); // Consume invalid input
-                choice = 0; // Set choice to an invalid value to continue the loop
+                continue; // Continue to next iteration of the loop
             }
             switch (choice) {
                 case 1:

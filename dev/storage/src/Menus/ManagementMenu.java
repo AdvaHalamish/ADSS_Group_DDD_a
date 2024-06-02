@@ -239,8 +239,9 @@ public class ManagementMenu {
 
     private void generateReportMenu(Scanner scanner) {
         System.out.println("\nGenerate Report");
-        System.out.println("1. Generate Report for Specific Category");
-        System.out.println("2. Generate Report for Categories");
+        System.out.println("1. Generate Report for Categories");
+        System.out.println("2. Generate Report for Defective Products");
+        System.out.println("3. Generate Report for Expired Products");
         System.out.print("Enter your choice: ");
 
         int choice = scanner.nextInt();
@@ -248,15 +249,19 @@ public class ManagementMenu {
 
         switch (choice) {
             case 1:
-                generateReportForSpecificCategory(scanner);
+                generateReportForCategories(scanner);
                 break;
             case 2:
-                generateReportForCategories(scanner);
+                generateDefectiveProductsReport();
+                break;
+            case 3:
+                generateExpiredProductsReport();
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
     }
+
     public void displayTotalAmountInStorage() {
         int totalQuantity = storage.TotalQuantity();
         int totalQuantityInStore = storage.TotalQuantityInStore();
@@ -266,5 +271,25 @@ public class ManagementMenu {
         System.out.println("Total Quantity: " + totalQuantity);
         System.out.println("Total Quantity in Store: " + totalQuantityInStore);
         System.out.println("Total Quantity in Warehouse: " + totalQuantityInWarehouse);
+    }
+
+    private void generateDefectiveProductsReport() {
+        List<Item> defectiveProducts = storage.generateDefectiveProductsReport();
+        if (defectiveProducts.isEmpty()) {
+            System.out.println("No defective products found.");
+        } else {
+            System.out.println("\nDefective Products:");
+            defectiveProducts.forEach(item -> System.out.println("Item: " + item));
+        }
+    }
+
+    private void generateExpiredProductsReport() {
+        List<Item> expiredProducts = storage.generateExpiredProductsReport();
+        if (expiredProducts.isEmpty()) {
+            System.out.println("No expired products found.");
+        } else {
+            System.out.println("\nExpired Products:");
+            expiredProducts.forEach(item -> System.out.println("Item: " + item));
+        }
     }
 }
