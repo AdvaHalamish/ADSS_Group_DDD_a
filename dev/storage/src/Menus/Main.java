@@ -1,4 +1,4 @@
-package Main;
+package Menus;
 
 import Classes.Storage;
 import Menus.WorkerMenu;
@@ -7,6 +7,8 @@ import Menus.UserMenu;
 import java.util.Scanner;
 
 public class Main {
+    private static Storage storage;
+
     public static void main(String[] args) {
         Storage storage = new Storage();
         Scanner scanner = new Scanner(System.in);

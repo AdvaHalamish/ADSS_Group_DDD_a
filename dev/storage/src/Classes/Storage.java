@@ -41,15 +41,16 @@ public class Storage {
             allProducts.add(newProduct);
         }
     }
-     public void removeItem(String name_code, ItemStatus status) {
+     public boolean removeItem(String name_code, ItemStatus status) {
         for (Product product : allProducts) {
             Item item = product.getItems().get(name_code);
             if (item != null) {
                 product.removeItem(item,status);
-                break;
+                return true;
             }
         }
-    }
+         return false;
+     }
 
     public List<Product> getProductsBySubCategory(String subCategory) {
         return allProducts.stream()

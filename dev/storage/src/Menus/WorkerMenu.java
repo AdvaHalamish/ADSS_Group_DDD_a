@@ -40,7 +40,7 @@ public class WorkerMenu {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != 4);
+        } while (choice != 3);
     }
 
     private void deleteItem(Scanner scanner) {
@@ -48,9 +48,12 @@ public class WorkerMenu {
         String code = scanner.nextLine();
         System.out.print("Enter new status to the item: (Defective, Soldout, Expired) ");
         String status = scanner.nextLine();
-        storage.removeItem(code, ItemStatus.valueOf(status));
-        System.out.println("Item Status changed.");
-    }
+        if(storage.removeItem(code, ItemStatus.valueOf(status)))
+            System.out.println("Item Status changed.");
+        else
+            System.out.println("Item Not Found.");
+
+        }
 
     private void generateBelowMinimumReport() {
         System.out.println("Products below minimum quantity:");

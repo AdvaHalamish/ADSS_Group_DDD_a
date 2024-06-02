@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ManagementMenu {
-    private Storage storage;
+    private static Storage storage;
 
     public ManagementMenu(Storage storage) {
         this.storage = storage;
@@ -59,10 +59,10 @@ public class ManagementMenu {
                     generateReportMenu(scanner);
                     break;
                 case 9:
-                    System.out.println("Exiting...");
+                    displayTotalAmountInStorage();
                     break;
                 case 10:
-                    displayTotalAmountInStorage();
+                    System.out.println("Exiting...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 10.");
