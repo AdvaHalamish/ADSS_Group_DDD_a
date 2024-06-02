@@ -42,7 +42,7 @@ public class WorkerMenu {
             }
         } while (choice != 3);
     }
-
+    //TODO:: checking the String from user- and throw exceptions
     private void deleteItem(Scanner scanner) {
         System.out.print("Enter item code to remove: ");
         String code = scanner.nextLine();
