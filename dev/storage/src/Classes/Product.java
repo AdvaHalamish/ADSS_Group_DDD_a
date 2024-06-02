@@ -119,4 +119,14 @@ public class Product {
     public ProductStatus getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "Product='" + productName+ '\'' +
+                ", quantityInStore='" + quantityInStore + '\'' +
+                ", quantityInWarehouse='" + quantityInWarehouse + '\'' +
+                ", minimumQuantityForAlert='" + minimumQuantityForAlert + '\'' +
+                ", discount='" + discount + '\'' +
+                ", status='" + status ;
+    }
 }

@@ -2,6 +2,7 @@ package Menus;
 
 import Classes.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -162,19 +163,44 @@ public class ManagementMenu {
 
     private void applyDiscountToCategory(Scanner scanner) {
         System.out.print("Enter category to apply discount: ");
-        String category = scanner.nextLine();
-        System.out.print("Enter discount rate (e.g., 0.1 for 10%): ");
-        double rate = scanner.nextDouble();
-        System.out.print("Enter discount start date (YYYY-MM-DD): ");
-        String startDateStr = scanner.next();
-        LocalDate startDate = LocalDate.parse(startDateStr);
-        System.out.print("Enter discount end date (YYYY-MM-DD): ");
-        String endDateStr = scanner.next();
-        LocalDate endDate = LocalDate.parse(endDateStr);
+            String category = scanner.nextLine();
+            System.out.print("Enter discount rate (e.g., 0.1 for 10%): ");
+            double rate = scanner.nextDouble();
 
-        Discount discount = new Discount(rate, startDate, endDate);
-        storage.applyDiscountToCategory(category, discount);
-        System.out.println("Discount applied to category " + category);
+            // Handle date input
+            LocalDate startDate = null;
+            boolean validDate = false;
+            while (!validDate) {
+                try {
+                    System.out.print("Enter discount start date (YYYY-MM-DD): ");
+                    String startDateStr = scanner.next();
+                    startDate = LocalDate.parse(startDateStr);
+                    validDate = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                    scanner.nextLine(); // Consume the invalid input
+                }
+            }
+
+            // Similar handling for end date
+            LocalDate endDate = null;
+            validDate = false;
+            while (!validDate) {
+                try {
+                    System.out.print("Enter discount end date (YYYY-MM-DD): ");
+                    String endDateStr = scanner.next();
+                    endDate = LocalDate.parse(endDateStr);
+                    validDate = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                    scanner.nextLine(); // Consume the invalid input
+                }
+            }
+
+            // Create and apply the discount
+            Discount discount = new Discount(rate, startDate, endDate);
+            storage.applyDiscountToCategory(category, discount);
+            System.out.println("Discount applied to category " + category);
     }
 
     private void applyDiscountToProduct(Scanner scanner) {
@@ -182,17 +208,43 @@ public class ManagementMenu {
         String productName = scanner.nextLine();
         System.out.print("Enter discount rate (e.g., 0.1 for 10%): ");
         double rate = scanner.nextDouble();
-        System.out.print("Enter discount start date (YYYY-MM-DD): ");
-        String startDateStr = scanner.next();
-        LocalDate startDate = LocalDate.parse(startDateStr);
-        System.out.print("Enter discount end date (YYYY-MM-DD): ");
-        String endDateStr = scanner.next();
-        LocalDate endDate = LocalDate.parse(endDateStr);
 
+        // Handle start date input
+        LocalDate startDate = null;
+        boolean validStartDate = false;
+        while (!validStartDate) {
+            try {
+                System.out.print("Enter discount start date (YYYY-MM-DD): ");
+                String startDateStr = scanner.next();
+                startDate = LocalDate.parse(startDateStr);
+                validStartDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                scanner.nextLine(); // Consume the invalid input
+            }
+        }
+
+        // Similar handling for end date
+        LocalDate endDate = null;
+        boolean validEndDate = false;
+        while (!validEndDate) {
+            try {
+                System.out.print("Enter discount end date (YYYY-MM-DD): ");
+                String endDateStr = scanner.next();
+                endDate = LocalDate.parse(endDateStr);
+                validEndDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                scanner.nextLine(); // Consume the invalid input
+            }
+        }
+
+        // Create and apply the discount
         Discount discount = new Discount(rate, startDate, endDate);
         storage.applyDiscountToProduct(productName, discount);
         System.out.println("Discount applied to product " + productName);
     }
+
 
     private void generateReportForSpecificCategory(Scanner scanner) {
         System.out.print("Enter category: ");

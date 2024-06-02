@@ -78,7 +78,8 @@ public class Item {
                 ", size='" + size + '\'' +
                 ", sub category='" + sub_category + '\'' +
                 ", category='" + category + '\'' +
-                ", Item_code='" + Item_code + '\'' ;
+                ", Item_code='" + Item_code + '\'' +
+                ", expiration date='" + expirationDate ;
     }
 
 

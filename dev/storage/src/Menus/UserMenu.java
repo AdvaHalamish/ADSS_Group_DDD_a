@@ -50,7 +50,8 @@ public class UserMenu {
         for (Product product : storage.getAllProducts()) {
             for (Item item : product.getItems().values()) {
                 if (item.getStatus() == ItemStatus.Available) {
-                    System.out.println(item.getName());
+                    System.out.println(product.getProductName());
+                    break;
                 }
             }
         }

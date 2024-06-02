@@ -32,7 +32,8 @@ public class Storage {
         for (Product product : allProducts) {
             if (product.getCategory().equals(newItem.getCategory()) &&
                     product.getSubCategory().equals(newItem.getSub_category()) &&
-                    product.getSize() == newItem.getSize()) {
+                    product.getSize() == newItem.getSize()&&product.getProductName().equals(newItem.getItem_name()))
+            {
                 existingProduct = product;
                 break;
             }
