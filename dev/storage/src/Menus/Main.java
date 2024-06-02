@@ -1,18 +1,18 @@
 package Menus;
 
 import Classes.Storage;
-import Menus.WorkerMenu;
-import Menus.ManagementMenu;
-import Menus.UserMenu;
+import Utils.Database;
+
 import java.util.Scanner;
 
 public class Main {
     private static Storage storage;
 
     public static void main(String[] args) {
-        Storage storage = new Storage();
         Scanner scanner = new Scanner(System.in);
         int choice;
+        storage= Storage.getInstance();
+        initializeSystem();
 
         do {
             System.out.println("\nMain Menu");
@@ -21,9 +21,15 @@ public class Main {
             System.out.println("3. User Menu");
             System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
 
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } else {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                choice = 0; // Set choice to an invalid value to continue the loop
+            }
             switch (choice) {
                 case 1:
                     WorkerMenu workerMenu = new WorkerMenu(storage);
@@ -44,5 +50,9 @@ public class Main {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 4);
+    }
+
+    private static void initializeSystem() {
+        storage = Database.getStorage();
     }
 }

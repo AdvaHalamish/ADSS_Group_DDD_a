@@ -23,6 +23,8 @@ public class Product {
         sub_category=firstItem.getSub_category();
         size=firstItem.getSize();
         status=ProductStatus.InStorage;
+        quantityInStore=0;
+        quantityInWarehouse=0;
     }
     public void set_minimum(int minimum){
         minimumQuantityForAlert=minimum;

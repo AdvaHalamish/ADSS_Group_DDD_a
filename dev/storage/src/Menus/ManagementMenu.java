@@ -19,14 +19,13 @@ public class ManagementMenu {
             System.out.println("\nManagement Menu");
             System.out.println("1. Show All Items");
             System.out.println("2. Show All Products");
-            System.out.println("3. Show items in categories");
-            System.out.println("4. Show items by status");
-            System.out.println("5. Show items by place");
-            System.out.println("6. Details about a specific item");
-            System.out.println("7. Apply Discount");
-            System.out.println("8. Generate Report");
-            System.out.println("9. View Total Amount in Storage");
-            System.out.println("10. Exit");
+            System.out.println("3. Show Specific Items (By Category, Status, or Place)");
+            System.out.println("4. Details about a specific item");
+            System.out.println("5. Apply Discount");
+            System.out.println("6. Generate Report");
+            System.out.println("7. Set Minimum Quantity For Product");
+            System.out.println("8. View Total Amount in Storage");
+            System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
@@ -39,36 +38,65 @@ public class ManagementMenu {
                     showAllProducts();
                     break;
                 case 3:
-                    showItemsInCategories(scanner);
+                    showSpecificItemsMenu(scanner);
                     break;
                 case 4:
-                    showItemsByStatus(scanner);
-                    break;
-                case 5:
-                    showItemsByPlace(scanner);
-                    break;
-                case 6:
                     showItemDetails(scanner);
                     break;
-                case 7:
-                    // Apply Discount
+                case 5:
                     applyDiscountMenu(scanner);
                     break;
-                case 8:
-                    // Generate Report
+                case 6:
                     generateReportMenu(scanner);
                     break;
-                case 9:
+                case 7:
+                    setMinimumQuantityForProduct(scanner);
+                    break;
+                case 8:
                     displayTotalAmountInStorage();
                     break;
-                case 10:
+                case 9:
                     System.out.println("Exiting...");
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 10.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 9.");
                     break;
             }
-        } while (choice != 10);
+        } while (choice != 9);
+    }
+
+    private void showSpecificItemsMenu(Scanner scanner) {
+        System.out.println("\nShow Specific Items");
+        System.out.println("1. By Category");
+        System.out.println("2. By Status");
+        System.out.println("3. By Place");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        switch (choice) {
+            case 1:
+                showItemsInCategories(scanner);
+                break;
+            case 2:
+                showItemsByStatus(scanner);
+                break;
+            case 3:
+                showItemsByPlace(scanner);
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                break;
+        }
+    }
+
+    private void setMinimumQuantityForProduct(Scanner scanner) {
+        System.out.print("Enter product name: ");
+        String productName = scanner.nextLine();
+        System.out.print("Enter minimum quantity: ");
+        int minQuantity = scanner.nextInt();
+        storage.setMinimumQuantityForProduct(productName, minQuantity);
+        System.out.println("Minimum quantity set for product " + productName);
     }
 
     private void showAllItems() {

@@ -42,7 +42,7 @@ public class UserMenu {
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
-            } while (choice != 3);
+            } while (choice != 4);
             scanner.close();
         }
     private void showAvailableProducts() {
@@ -80,14 +80,20 @@ public class UserMenu {
     }
     private static void showItemsByCategory(Scanner scanner) {
         System.out.print("Enter category: ");
-        String category = scanner.nextLine();
+        String category = scanner.nextLine(); // Read the entire line as a string
+
         System.out.println("\nItems in category " + category + ":");
+        boolean found = false;
         for (Product product : storage.getAllProducts()) {
             if (product.getCategory().equalsIgnoreCase(category)) {
+                found = true;
                 for (Item item : product.getItems().values()) {
                     System.out.println(item);
                 }
             }
+        }
+        if (!found) {
+            System.out.println("No items found in category " + category);
         }
     }
     private static void showItemsBySubCategory(Scanner scanner) {

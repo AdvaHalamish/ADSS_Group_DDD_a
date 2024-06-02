@@ -6,11 +6,17 @@ import java.util.stream.Collectors;
 
 public class Storage {
     private List<Product> allProducts;
+    private static Storage instance;
 
     public Storage() {
         allProducts = new ArrayList<>();
     }
-
+    public static Storage getInstance() {
+        if (instance == null) {
+            instance = new Storage();
+        }
+        return instance;
+    }
     public Product getProductByName(String name_product) {
         Product getproduct = null;
         for (Product product : allProducts) {
@@ -168,4 +174,13 @@ public class Storage {
         }
         return sum;
     }
+    public void setMinimumQuantityForProduct(String productName, int minimumQuantity) {
+        Product product = getProductByName(productName);
+        if (product != null) {
+            product.set_minimum(minimumQuantity);
+        } else {
+            System.out.println("Product not found.");
+        }
+    }
+
 }
