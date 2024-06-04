@@ -3,6 +3,7 @@ package Menus;
 import Classes.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class ManagementMenu {
 
     public void displayMenu() {
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int choice=0;
         do {
             System.out.println("\nManagement Menu");
             System.out.println("1. Show All Items");
@@ -28,8 +29,14 @@ public class ManagementMenu {
             System.out.println("8. View Total Amount in Storage");
             System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                continue; // Continue to next iteration of the loop
+            }
 
             switch (choice) {
                 case 1:
