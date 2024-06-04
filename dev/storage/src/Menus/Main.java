@@ -34,15 +34,15 @@ public class Main {
             switch (choice) {
                 case 1:
                     WorkerMenu workerMenu = new WorkerMenu(storage);
-                    workerMenu.displayMenu();
+                    workerMenu.displayMenu(scanner);
                     break;
                 case 2:
                     ManagementMenu departmentMenu = new ManagementMenu(storage);
-                    departmentMenu.displayMenu();
+                    departmentMenu.displayMenu(scanner);
                     break;
                 case 3:
                     UserMenu userMenu = new UserMenu(storage);
-                    userMenu.displayMenu();
+                    userMenu.displayMenu(scanner);
                     break;
                 case 4:
                     System.out.println("Exiting Main Menu...");
@@ -51,7 +51,6 @@ public class Main {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 4);
-        scanner.close();
     }
 
     private static void initializeSystem() {
