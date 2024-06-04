@@ -15,8 +15,7 @@ public class UserMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public void displayMenu(Scanner scanner) {
         int choice=0;
         do {
                 System.out.println("\nMain Menu:");
@@ -51,7 +50,6 @@ public class UserMenu {
                         System.out.println("Invalid choice. Please try again.");
                 }
             } while (choice != 4);
-            scanner.close();
         }
     private void showAvailableProducts() {
         System.out.println("Available products in storage:");

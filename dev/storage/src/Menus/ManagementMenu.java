@@ -14,8 +14,7 @@ public class ManagementMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public void displayMenu(Scanner scanner) {
         int choice=0;
         do {
             System.out.println("\nManagement Menu");
@@ -71,7 +70,6 @@ public class ManagementMenu {
                     break;
             }
         } while (choice != 9);
-        scanner.close();
     }
 
     private void showSpecificItemsMenu(Scanner scanner) {

@@ -16,8 +16,7 @@ public class WorkerMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
+    public void displayMenu(Scanner scanner) {
         int choice=0;
         do {
             System.out.println("\nWorker Menu");
@@ -48,7 +47,6 @@ public class WorkerMenu {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 3);
-        scanner.close();
     }
     private void deleteItem(Scanner scanner) {
         System.out.print("Enter item code to remove: ");
