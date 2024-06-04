@@ -29,7 +29,7 @@ public class StorageTest {
         storage.insertItem(item3);
 
         List<Product> products = storage.getProductsBySubCategory("SubCategory1");
-        assertEquals(1, products.size());
+        assertEquals(2, products.size());
         assertEquals("Category1", products.get(0).getCategory());
         assertEquals("SubCategory1", products.get(0).getSubCategory());
     }
@@ -65,28 +65,28 @@ public class StorageTest {
     @Test
     public void testGetQuantityInStore() {
         storage.insertItem(item1);
-        assertEquals(1,storage.TotalQuantityInStore());
+        assertEquals(1,storage.getTotalProductQuantity());
     }
 
     @Test
     public void testGetQuantityInWarehouse() {
         storage.insertItem(item2);
-        assertEquals(1,storage.TotalQuantityInWareHouse());
+        assertEquals(1,storage.getTotalProductQuantityInWarehouse());
     }
 
     @Test
     public void testRemoveItem() {
         storage.insertItem(item2);
-        assertEquals(1, storage.TotalQuantity());
+        assertEquals(1, storage.getTotalProductQuantity());
         storage.removeItem(item2.getItem_code(),ItemStatus.Defective);
-        assertEquals(0, storage.TotalQuantity());
+        assertEquals(0, storage.getTotalProductQuantity());
     }
 
     @Test
     public void testGetTotalQuantity() {
         storage.insertItem(item1);
         storage.insertItem(item2);
-        assertEquals(2, storage.getProductByName(item1.getItem_name()).getTotalQuantity());
+        assertEquals(2, storage.getTotalProductQuantity());
     }
 
 

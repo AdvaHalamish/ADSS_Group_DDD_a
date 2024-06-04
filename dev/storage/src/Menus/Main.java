@@ -51,6 +51,7 @@ public class Main {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 4);
+        scanner.close();
     }
 
     private static void initializeSystem() {

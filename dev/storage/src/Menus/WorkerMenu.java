@@ -41,19 +41,33 @@ public class WorkerMenu {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 3);
+        scanner.close();
     }
-    //TODO:: checking the String from user- and throw exceptions
     private void deleteItem(Scanner scanner) {
         System.out.print("Enter item code to remove: ");
         String code = scanner.nextLine();
         System.out.print("Enter new status to the item: (Defective, Soldout, Expired) ");
-        String status = scanner.nextLine();
-        if(storage.removeItem(code, ItemStatus.valueOf(status)))
-            System.out.println("Item Status changed.");
-        else
-            System.out.println("Item Not Found.");
-
+        String status_string = scanner.nextLine();
+        if (isValidStatus(status_string)) {
+            ItemStatus status = ItemStatus.valueOf(status_string);
+            if (storage.removeItem(code, status)) {
+                System.out.println("Item Status changed.");
+            } else {
+                System.out.println("Item Not Found.");
+            }
+        } else {
+            System.out.println("Status Not Valid.");
         }
+    }
+    private static boolean isValidStatus(String statusInput) {
+        for (ItemStatus status : ItemStatus.values()) {
+            if (status.name().equals(statusInput)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void generateBelowMinimumReport() {
         System.out.println("Products below minimum quantity:");

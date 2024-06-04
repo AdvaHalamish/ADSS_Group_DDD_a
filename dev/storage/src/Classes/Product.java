@@ -23,8 +23,17 @@ public class Product {
         sub_category=firstItem.getSub_category();
         size=firstItem.getSize();
         status=ProductStatus.InStorage;
-        quantityInStore=0;
-        quantityInWarehouse=0;
+        if(firstItem.stored.equals(ItemPlace.Warehouse)) {
+            quantityInStore = 0;
+            quantityInWarehouse = 1;
+        } else if (firstItem.stored.equals(ItemPlace.Store)) {
+            quantityInStore = 1;
+            quantityInWarehouse = 0;
+        }
+        else {
+            quantityInStore = 0;
+            quantityInWarehouse = 0;
+        }
     }
     public void set_minimum(int minimum){
         minimumQuantityForAlert=minimum;
@@ -85,6 +94,7 @@ public class Product {
                 double discountedPrice = item.getCostPrice() * (1 - new_discount.getDiscountRate());
                 item.setSellingPrice(discountedPrice);
             }
+            discount=new_discount;
         }
     }
 

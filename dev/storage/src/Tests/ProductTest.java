@@ -26,9 +26,10 @@ public class ProductTest {
 
     @Test
     public void testRemoveItem() {
-        product.addItem(item2);
         product.removeItem(item1,ItemStatus.Soldout);
         assertEquals(1, product.getItems().size());
+        assertEquals(ItemStatus.Soldout, item1.getStatus());
+
     }
 
     @Test

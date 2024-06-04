@@ -154,27 +154,31 @@ public class Storage {
         return null; // Item not found
     }
 
-    public int TotalQuantity() {
-        int sum = 0;
-        for (Product product : allProducts) {
-            sum+=product.getTotalQuantity();
-        }
-        return sum;
+    public int getTotalProductQuantity() {
+        return allProducts.stream().mapToInt(Product::getTotalQuantity).sum();
     }
-    public int TotalQuantityInStore() {
-        int sum = 0;
-        for (Product product : allProducts) {
-            sum+=product.getQuantityInStore();
-        }
-        return sum;
+
+    public int getTotalProductQuantityInStore() {
+        return allProducts.stream().mapToInt(Product::getQuantityInStore).sum();
     }
-    public int TotalQuantityInWareHouse() {
-        int sum = 0;
-        for (Product product : allProducts) {
-            sum+=product.getQuantityInWarehouse();
-        }
-        return sum;
+
+    public int getTotalProductQuantityInWarehouse() {
+        return allProducts.stream().mapToInt(Product::getQuantityInWarehouse).sum();
     }
+
+   /* public int getItemsTotalAmount() {
+        return allProducts.stream().mapToInt(Product::getTotalQuantity).sum();
+    }
+
+    public int getItemsTotalAmountInStore() {
+        return allProducts.stream().mapToInt(Product::getQuantityInStore).sum();
+    }
+
+    public int getItemsTotalAmountInWarehouse() {
+        return allProducts.stream().mapToInt(Product::getQuantityInWarehouse).sum();
+    }
+
+    */
     public void setMinimumQuantityForProduct(String productName, int minimumQuantity) {
         Product product = getProductByName(productName);
         if (product != null) {

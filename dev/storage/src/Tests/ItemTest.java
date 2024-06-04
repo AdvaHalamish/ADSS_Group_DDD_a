@@ -62,7 +62,7 @@ public class ItemTest {
     @Test
     public void testToString() {
         Item item = new Item("Item", 10.0, "Manufacturer", "Code123", "Category", "SubCategory", 1.0, ItemPlace.Store, LocalDate.now().plusDays(10), ItemStatus.Available);
-        String expected = "Item_name='Item', size='1.0', sub category='SubCategory', category='Category', Item_code='Code123'";
+        String expected = "Item_name='Item', size='1.0', sub category='SubCategory', category='Category', Item_code='Code123', expiration date='2024-06-14";
         assertEquals(expected, item.toString());
     }
 

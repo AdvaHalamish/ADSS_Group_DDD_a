@@ -64,6 +64,7 @@ public class ManagementMenu {
                     break;
             }
         } while (choice != 9);
+        scanner.close();
     }
 
     private void showSpecificItemsMenu(Scanner scanner) {
@@ -315,12 +316,11 @@ public class ManagementMenu {
     }
 
     public void displayTotalAmountInStorage() {
-        int totalQuantity = storage.TotalQuantity();
-        int totalQuantityInStore = storage.TotalQuantityInStore();
-        int totalQuantityInWarehouse = storage.TotalQuantityInWareHouse();
-
+        int totalQuantity = storage.getTotalProductQuantity();
+        int totalQuantityInStore = storage.getTotalProductQuantityInStore();
+        int totalQuantityInWarehouse = storage.getTotalProductQuantityInWarehouse();
         System.out.println("Total Amount in Storage:");
-        System.out.println("Total Quantity: " + totalQuantity);
+        System.out.println("Total Product Quantity: " + totalQuantity );
         System.out.println("Total Quantity in Store: " + totalQuantityInStore);
         System.out.println("Total Quantity in Warehouse: " + totalQuantityInWarehouse);
     }
