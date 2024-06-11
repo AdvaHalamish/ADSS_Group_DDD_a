@@ -5,6 +5,7 @@ import Classes.ItemStatus;
 import Classes.Product;
 import Classes.Storage;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,17 +16,22 @@ public class WorkerMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
+    public void displayMenu(Scanner scanner) {
+        int choice=0;
         do {
             System.out.println("\nWorker Menu");
             System.out.println("1. Update Item Status");
             System.out.println("2. Generate Report for Products Below Minimum Quantity");
             System.out.println("3. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                continue; // Continue to next iteration of the loop
+            }
 
             switch (choice) {
                 case 1:
@@ -41,7 +47,6 @@ public class WorkerMenu {
                     System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 3);
-        scanner.close();
     }
     private void deleteItem(Scanner scanner) {
         System.out.print("Enter item code to remove: ");
