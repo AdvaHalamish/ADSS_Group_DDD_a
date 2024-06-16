@@ -4,5 +4,5 @@ public enum ItemPlace{
     Store,
     Warehouse,
     delivery,
-    Soldout
+    Sold
 }

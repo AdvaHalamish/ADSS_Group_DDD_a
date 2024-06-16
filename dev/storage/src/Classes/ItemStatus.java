@@ -4,5 +4,5 @@ public enum ItemStatus{
     Defective,
     Expired,
     Available,
-    Soldout
+    Sold
 }

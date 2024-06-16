@@ -141,7 +141,7 @@ public class ManagementMenu {
     }
 
     private void showItemsByStatus(Scanner scanner) {
-        System.out.print("Enter status (Available, Defective, Soldout, Expired): ");
+        System.out.print("Enter status (Available, Defective, Sold, Expired): ");
         String statusStr = scanner.nextLine();
         ItemStatus status = ItemStatus.valueOf(statusStr);
         List<Item> items = storage.getItemsByStatus(status);

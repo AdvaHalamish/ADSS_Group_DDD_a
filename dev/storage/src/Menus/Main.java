@@ -33,8 +33,8 @@ public class Main {
             }
             switch (choice) {
                 case 1:
-                    WorkerMenu workerMenu = new WorkerMenu(storage);
-                    workerMenu.displayMenu(scanner);
+                    StorekeeperMenu storekeeperMenu = new StorekeeperMenu(storage);
+                    storekeeperMenu.displayMenu(scanner);
                     break;
                 case 2:
                     ManagementMenu departmentMenu = new ManagementMenu(storage);
