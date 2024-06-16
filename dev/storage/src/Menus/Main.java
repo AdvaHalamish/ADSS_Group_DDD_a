@@ -17,7 +17,7 @@ public class Main {
 
         do {
             System.out.println("\nMain Menu");
-            System.out.println("1. Worker Menu");
+            System.out.println("1. Store Keeper Menu");
             System.out.println("2. Management Menu");
             System.out.println("3. User Menu");
             System.out.println("4. Exit");
@@ -33,8 +33,8 @@ public class Main {
             }
             switch (choice) {
                 case 1:
-                    WorkerMenu workerMenu = new WorkerMenu(storage);
-                    workerMenu.displayMenu(scanner);
+                    StorekeeperMenu storekeeperMenu = new StorekeeperMenu(storage);
+                    storekeeperMenu.displayMenu(scanner);
                     break;
                 case 2:
                     ManagementMenu departmentMenu = new ManagementMenu(storage);
