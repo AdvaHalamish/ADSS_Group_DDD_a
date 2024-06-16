@@ -1,6 +1,7 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,17 +71,25 @@ public class Storage {
                 .filter(product -> product.getCategory().equalsIgnoreCase(category))
                 .collect(Collectors.toList());
     }
+    public void checkAndProcessExpiredProducts() {
+        for (Product product : allProducts) {
+            if (product.getStatus() == ProductStatus.InStorage) {
+                for (Item item : product.getItems().values()) {
+                    item.isExpired();
+                }}}
+    }
 
     public List<Item> generateExpiredProductsReport() {
+        checkAndProcessExpiredProducts();
         return allProducts.stream()
-                .flatMap(product -> product.getItems().values().stream())  // שינוי כאן
+                .flatMap(product -> product.getItems().values().stream())
                 .filter(Item::isExpired)
                 .collect(Collectors.toList());
     }
 
     public List<Item> generateDefectiveProductsReport() {
         return allProducts.stream()
-                .flatMap(product -> product.getItems().values().stream())  // שינוי כאן
+                .flatMap(product -> product.getItems().values().stream())
                 .filter(item -> item.getStatus() == ItemStatus.Defective)
                 .collect(Collectors.toList());
     }
