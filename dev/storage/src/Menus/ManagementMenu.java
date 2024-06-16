@@ -257,7 +257,7 @@ public class ManagementMenu {
     }
 
     private void generateReportForCategories(Scanner scanner) {
-        System.out.print("Enter categories (comma-separated): ");
+        System.out.print("Enter categories (separated with ','): ");
         String[] categories = scanner.nextLine().split(",");
         for (String category : categories) {
             List<Product> products = storage.generateCategoryReport(category.trim());
