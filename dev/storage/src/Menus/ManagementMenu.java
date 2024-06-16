@@ -3,6 +3,7 @@ package Menus;
 import Classes.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,9 +14,8 @@ public class ManagementMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
+    public void displayMenu(Scanner scanner) {
+        int choice = 0;
         do {
             System.out.println("\nManagement Menu");
             System.out.println("1. Show All Items");
@@ -28,8 +28,14 @@ public class ManagementMenu {
             System.out.println("8. View Total Amount in Storage");
             System.out.println("9. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                continue; // Continue to next iteration of the loop
+            }
 
             switch (choice) {
                 case 1:
@@ -64,7 +70,6 @@ public class ManagementMenu {
                     break;
             }
         } while (choice != 9);
-        scanner.close();
     }
 
     private void showSpecificItemsMenu(Scanner scanner) {
@@ -108,10 +113,11 @@ public class ManagementMenu {
             product.getItems().values().forEach(item -> System.out.println("  " + item));
         });
     }
+
     private void showAllProducts() {
         System.out.println("\nAll Products In Storage:");
         for (Product product : storage.getAllProducts()) {
-            if(product.getStatus().equals(ProductStatus.InStorage)) {
+            if (product.getStatus().equals(ProductStatus.InStorage)) {
                 System.out.println("Product: " + product.getProductName());
                 System.out.println("Category: " + product.getCategory());
                 System.out.println("Sub-category: " + product.getSubCategory());
@@ -136,7 +142,7 @@ public class ManagementMenu {
     }
 
     private void showItemsByStatus(Scanner scanner) {
-        System.out.print("Enter status (Available, Defective, Soldout, Expired): ");
+        System.out.print("Enter status (Available, Defective, Sold, Expired): ");
         String statusStr = scanner.nextLine();
         ItemStatus status = ItemStatus.valueOf(statusStr);
         List<Item> items = storage.getItemsByStatus(status);
@@ -164,44 +170,44 @@ public class ManagementMenu {
 
     private void applyDiscountToCategory(Scanner scanner) {
         System.out.print("Enter category to apply discount: ");
-            String category = scanner.nextLine();
-            System.out.print("Enter discount rate (e.g., 0.1 for 10%): ");
-            double rate = scanner.nextDouble();
+        String category = scanner.nextLine();
+        System.out.print("Enter discount rate (e.g., 0.1 for 10%): ");
+        double rate = scanner.nextDouble();
 
-            // Handle date input
-            LocalDate startDate = null;
-            boolean validDate = false;
-            while (!validDate) {
-                try {
-                    System.out.print("Enter discount start date (YYYY-MM-DD): ");
-                    String startDateStr = scanner.next();
-                    startDate = LocalDate.parse(startDateStr);
-                    validDate = true;
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
-                    scanner.nextLine(); // Consume the invalid input
-                }
+        // Handle date input
+        LocalDate startDate = null;
+        boolean validDate = false;
+        while (!validDate) {
+            try {
+                System.out.print("Enter discount start date (YYYY-MM-DD): ");
+                String startDateStr = scanner.next();
+                startDate = LocalDate.parse(startDateStr);
+                validDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                scanner.nextLine(); // Consume the invalid input
             }
+        }
 
-            // Similar handling for end date
-            LocalDate endDate = null;
-            validDate = false;
-            while (!validDate) {
-                try {
-                    System.out.print("Enter discount end date (YYYY-MM-DD): ");
-                    String endDateStr = scanner.next();
-                    endDate = LocalDate.parse(endDateStr);
-                    validDate = true;
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
-                    scanner.nextLine(); // Consume the invalid input
-                }
+        // Similar handling for end date
+        LocalDate endDate = null;
+        validDate = false;
+        while (!validDate) {
+            try {
+                System.out.print("Enter discount end date (YYYY-MM-DD): ");
+                String endDateStr = scanner.next();
+                endDate = LocalDate.parse(endDateStr);
+                validDate = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
+                scanner.nextLine(); // Consume the invalid input
             }
+        }
 
-            // Create and apply the discount
-            Discount discount = new Discount(rate, startDate, endDate);
-            storage.applyDiscountToCategory(category, discount);
-            System.out.println("Discount applied to category " + category);
+        // Create and apply the discount
+        Discount discount = new Discount(rate, startDate, endDate);
+        storage.applyDiscountToCategory(category, discount);
+        System.out.println("Discount applied to category " + category);
     }
 
     private void applyDiscountToProduct(Scanner scanner) {
@@ -246,7 +252,6 @@ public class ManagementMenu {
         System.out.println("Discount applied to product " + productName);
     }
 
-
     private void generateReportForSpecificCategory(Scanner scanner) {
         System.out.print("Enter category: ");
         String category = scanner.nextLine();
@@ -269,6 +274,7 @@ public class ManagementMenu {
             });
         }
     }
+
     private void applyDiscountMenu(Scanner scanner) {
         System.out.println("\nApply Discount");
         System.out.println("1. Apply Discount to Category");
@@ -295,6 +301,7 @@ public class ManagementMenu {
         System.out.println("1. Generate Report for Categories");
         System.out.println("2. Generate Report for Defective Products");
         System.out.println("3. Generate Report for Expired Products");
+        System.out.println("4. Generate Report for Products Below Minimum Quantity");
         System.out.print("Enter your choice: ");
 
         int choice = scanner.nextInt();
@@ -310,6 +317,9 @@ public class ManagementMenu {
             case 3:
                 generateExpiredProductsReport();
                 break;
+            case 4:
+                generateBelowMinimumReport();
+                break;
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
@@ -320,7 +330,7 @@ public class ManagementMenu {
         int totalQuantityInStore = storage.getTotalProductQuantityInStore();
         int totalQuantityInWarehouse = storage.getTotalProductQuantityInWarehouse();
         System.out.println("Total Amount in Storage:");
-        System.out.println("Total Product Quantity: " + totalQuantity );
+        System.out.println("Total Product Quantity: " + totalQuantity);
         System.out.println("Total Quantity in Store: " + totalQuantityInStore);
         System.out.println("Total Quantity in Warehouse: " + totalQuantityInWarehouse);
     }
@@ -342,6 +352,20 @@ public class ManagementMenu {
         } else {
             System.out.println("\nExpired Products:");
             expiredProducts.forEach(item -> System.out.println("Item: " + item));
+        }
+    }
+
+    private void generateBelowMinimumReport() {
+        List<Product> productsBelowMinimum = storage.generateBelowMinimumReport();
+        if (productsBelowMinimum.isEmpty()) {
+            System.out.println("No products below minimum quantity.");
+        } else {
+            System.out.println("\nProducts Below Minimum Quantity:");
+            for (Product product : productsBelowMinimum) {
+                System.out.println("Product: " + product.getProductName());
+                System.out.println("Current Quantity: " + product.getTotalQuantity());
+                System.out.println("Minimum Quantity: " + product.getMinimumQuantityForAlert());
+            }
         }
     }
 }

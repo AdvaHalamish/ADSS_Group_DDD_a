@@ -4,6 +4,8 @@ import Classes.Item;
 import Classes.ItemStatus;
 import Classes.Product;
 import Classes.Storage;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserMenu {
@@ -13,9 +15,8 @@ public class UserMenu {
         this.storage = storage;
     }
 
-    public void displayMenu() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
+    public void displayMenu(Scanner scanner) {
+        int choice=0;
         do {
                 System.out.println("\nMain Menu:");
                 System.out.println("1. Show all items");
@@ -23,8 +24,14 @@ public class UserMenu {
                 System.out.println("3. Details about a specific item");
                 System.out.println("4. Exit");
                 System.out.print("Choose an option: ");
+            try {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                continue; // Continue to next iteration of the loop
+            }
 
                 switch (choice) {
                     case 1:
@@ -43,7 +50,6 @@ public class UserMenu {
                         System.out.println("Invalid choice. Please try again.");
                 }
             } while (choice != 4);
-            scanner.close();
         }
     private void showAvailableProducts() {
         System.out.println("Available products in storage:");
