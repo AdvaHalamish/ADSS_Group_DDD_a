@@ -13,6 +13,9 @@ public class Product {
     private String sub_category;
     private ProductStatus status;
     private double size;
+    private double cost_price;
+    private double selling_price;
+
 
 
     public Product(Item firstItem) {
@@ -34,6 +37,8 @@ public class Product {
             quantityInStore = 0;
             quantityInWarehouse = 0;
         }
+        cost_price=firstItem.getCostPrice();
+        selling_price=firstItem.getSellingPrice();
     }
     public void set_minimum(int minimum){
         minimumQuantityForAlert=minimum;
@@ -91,10 +96,13 @@ public class Product {
     public void applyDiscount(Discount new_discount) {
         if (new_discount.isDiscountActive()) {
             for (Item item : items.values()) {
-                double discountedPrice = item.getCostPrice() * (1 - new_discount.getDiscountRate());
-                item.setSellingPrice(discountedPrice);
+                if(item.getStatus().equals(ItemStatus.Available)) {
+                    double discountedPrice = item.getCostPrice() * (1 - new_discount.getDiscountRate());
+                    item.setSellingPrice(discountedPrice);
+                }
             }
             discount=new_discount;
+            selling_price=cost_price*(1-new_discount.getDiscountRate());
         }
     }
 
@@ -132,11 +140,23 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product='" + productName+ '\'' +
-                ", quantityInStore='" + quantityInStore + '\'' +
-                ", quantityInWarehouse='" + quantityInWarehouse + '\'' +
-                ", minimumQuantityForAlert='" + minimumQuantityForAlert + '\'' +
-                ", discount='" + discount + '\'' +
-                ", status='" + status ;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Product: ").append(productName).append("\n");
+        sb.append("Category: ").append(category).append("\n");
+        sb.append("Sub-category: ").append(sub_category).append("\n");
+        sb.append("Size: ").append(size).append("\n");
+        sb.append("Quantity in Store: ").append(quantityInStore).append("\n");
+        sb.append("Quantity in Warehouse: ").append(quantityInWarehouse).append("\n");
+        sb.append("Minimum Quantity for Alert: ").append(minimumQuantityForAlert).append("\n");
+        sb.append("Price: ").append(selling_price).append("\n");
+
+        if (discount != null && discount.isDiscountActive()) {
+            sb.append("Discount: ").append(discount.getDiscountRate()).append("\n");
+        } else {
+            sb.append("Discount: Not Active\n");
+        }
+
+        sb.append("Status: ").append(status).append("\n");
+        return sb.toString();
     }
 }

@@ -118,18 +118,12 @@ public class ManagementMenu {
         System.out.println("\nAll Products In Storage:");
         for (Product product : storage.getAllProducts()) {
             if (product.getStatus().equals(ProductStatus.InStorage)) {
-                System.out.println("Product: " + product.getProductName());
-                System.out.println("Category: " + product.getCategory());
-                System.out.println("Sub-category: " + product.getSubCategory());
-                System.out.println("Size: " + product.getSize());
-                System.out.println("Quantity in Store: " + product.getQuantityInStore());
-                System.out.println("Quantity in Warehouse: " + product.getQuantityInWarehouse());
-                System.out.println("Minimum Quantity for Alert: " + product.getMinimumQuantityForAlert());
-                System.out.println("Discount: " + (product.getDiscount() != null ? "Active" : "Not Active"));
+                System.out.println(product.toString());
                 System.out.println(); // Empty line between products
             }
         }
     }
+
 
     private void showItemsInCategories(Scanner scanner) {
         System.out.print("Enter category: ");
@@ -263,7 +257,7 @@ public class ManagementMenu {
     }
 
     private void generateReportForCategories(Scanner scanner) {
-        System.out.print("Enter categories (comma-separated): ");
+        System.out.print("Enter categories (separated with ','): ");
         String[] categories = scanner.nextLine().split(",");
         for (String category : categories) {
             List<Product> products = storage.generateCategoryReport(category.trim());
