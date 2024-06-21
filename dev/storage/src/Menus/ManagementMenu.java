@@ -74,7 +74,7 @@ public class ManagementMenu {
 
     private void showSpecificItemsMenu(Scanner scanner) {
         System.out.println("\nShow Specific Items");
-        System.out.println("1. By Category");
+        System.out.println("1. By Category, Sub Category and Size ");
         System.out.println("2. By Status");
         System.out.println("3. By Place");
         System.out.print("Enter your choice: ");
@@ -83,7 +83,7 @@ public class ManagementMenu {
 
         switch (choice) {
             case 1:
-                showItemsInCategories(scanner);
+                showItemsInCategoriesMenu(scanner);
                 break;
             case 2:
                 showItemsByStatus(scanner);
@@ -94,6 +94,35 @@ public class ManagementMenu {
             default:
                 System.out.println("Invalid choice. Please try again.");
                 break;
+        }
+    }
+    private void showItemsInCategoriesMenu(Scanner scanner) {
+        System.out.print("\nEnter category (leave blank if no filter): ");
+        String category = scanner.nextLine();
+        System.out.print("Enter sub-category (leave blank if no filter): ");
+        String subCategory = scanner.nextLine();
+        System.out.print("Enter size (leave blank if no filter): ");
+        String sizeInput = scanner.nextLine();
+
+        // Convert size input to double if provided
+        Double size = null;
+        if (!sizeInput.isEmpty()) {
+            try {
+                size = Double.parseDouble(sizeInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid size input. Please enter a valid number.");
+                return;
+            }
+        }
+
+        List<Product> products = storage.getProductsByFilters(category, subCategory, size);
+        if (products.isEmpty()) {
+            System.out.println("No products found matching the given filters.");
+        } else {
+            products.forEach(product -> {
+                System.out.println("Product: " + product.getProductName());
+                product.getItems().values().forEach(item -> System.out.println("  " + item));
+            });
         }
     }
 
@@ -125,15 +154,6 @@ public class ManagementMenu {
     }
 
 
-    private void showItemsInCategories(Scanner scanner) {
-        System.out.print("Enter category: ");
-        String category = scanner.nextLine();
-        List<Product> products = storage.getProductsByCategory(category);
-        products.forEach(product -> {
-            System.out.println("Product: " + product.getProductName());
-            product.getItems().values().forEach(item -> System.out.println("  " + item));
-        });
-    }
 
     private void showItemsByStatus(Scanner scanner) {
         System.out.print("Enter status (Available, Defective, Sold, Expired): ");
@@ -244,16 +264,6 @@ public class ManagementMenu {
         Discount discount = new Discount(rate, startDate, endDate);
         storage.applyDiscountToProduct(productName, discount);
         System.out.println("Discount applied to product " + productName);
-    }
-
-    private void generateReportForSpecificCategory(Scanner scanner) {
-        System.out.print("Enter category: ");
-        String category = scanner.nextLine();
-        List<Product> products = storage.generateCategoryReport(category);
-        products.forEach(product -> {
-            System.out.println("Product: " + product.getProductName());
-            product.getItems().values().forEach(item -> System.out.println("  " + item));
-        });
     }
 
     private void generateReportForCategories(Scanner scanner) {

@@ -11,9 +11,10 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int choice=0;
-        storage= Storage.getInstance();
-        initializeSystem();
+        int choice = 0;
+
+        // Choose storage type first
+        chooseStorageType(scanner);
 
         do {
             System.out.println("\nMain Menu");
@@ -53,7 +54,41 @@ public class Main {
         } while (choice != 4);
     }
 
-    private static void initializeSystem() {
+    private static void chooseStorageType(Scanner scanner) {
+        int storageChoice = 0;
+        do {
+            System.out.println("\nChoose Storage Type");
+            System.out.println("1. Use Empty Storage");
+            System.out.println("2. Use Pre-populated Database");
+            System.out.print("Enter your choice: ");
+
+            try {
+                storageChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer choice.");
+                scanner.nextLine(); // Consume invalid input
+                continue; // Continue to next iteration of the loop
+            }
+
+            switch (storageChoice) {
+                case 1:
+                    initializeEmptyStorage();
+                    break;
+                case 2:
+                    initializeDatabaseStorage();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (storageChoice < 1 || storageChoice > 2);
+    }
+
+    private static void initializeEmptyStorage() {
+        storage = new Storage();
+    }
+
+    private static void initializeDatabaseStorage() {
         storage = Database.getStorage();
     }
 }

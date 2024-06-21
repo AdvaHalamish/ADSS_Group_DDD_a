@@ -4,163 +4,85 @@ import java.time.LocalDate;
 
 public class Item {
 
-    private String Item_name;
-    private double costPrice;
-    private double sellingPrice;
-    private String manufacturer;
-    private String Item_code;
-
-    private String category;
-    private String sub_category;
-    private double size;
-
+    private String itemCode;
     public ItemPlace stored;
     private LocalDate expirationDate;
-
     public ItemStatus status;
 
-
     /**
-     * Constructs a new Classes.Item object with the given parameters.
+     * Constructs a new Item object with the given parameters.
      *
-     * @param Item_name: the name of the Classes.Item
-     * @param othercostPrice: the costPrice of the Classes.Item
-     * sellingPrice: the default is costPrice of the Classes.Item
-     * @param stored: the place stored of the Classes.Item
-     * @param expirationDate: the expirationDate of the Classes.Item
-     * @param manufacturer: the manufacturer of the Classes.Item
-     * @param Item_code: the code of the Classes.Item
-     * @param category: the category of the Classes.Item
-     * @param sub_category: the sub-category of the Classes.Item
-     * @param size: the size of the Classes.Item
+     * @param stored         : the place stored of the Item
+     * @param itemCode       : the code of the Item
+     * @param expirationDate : the expiration date of the Item
+     * @param status
      */
-    public Item(String Item_name, double othercostPrice, String manufacturer, String Item_code, String category, String sub_category, double size, ItemPlace stored, LocalDate expirationDate, ItemStatus status) {
-        this.Item_name = Item_name;
-        this.costPrice = othercostPrice;
-        this.sellingPrice = othercostPrice;
-        this.manufacturer = manufacturer;
-        this.Item_code = Item_code;
-        this.category = category;
-        this.sub_category = sub_category;
-        this.size = size;
+
+    public Item(ItemPlace stored, String itemCode, LocalDate expirationDate, ItemStatus status) {
         this.stored = stored;
+        this.itemCode = itemCode;
         this.expirationDate = expirationDate;
         this.status = status;
     }
 
-    /**
-     * Gets the name of the Classes.Item.
-     *
-     * Return the name of the Classes.Item
-     */
-    public String getName() {
 
-        return Item_name;
-    }
-    /**
-     * Gets the manufacturer of the Classes.Item.
-     *
-     * Return the manufacturer of the Classes.Item
-     */
-    public String getManufacturer() {
-
-        return manufacturer;
-    }
-
-    /**
-     * Returns a string representation of the Classes.Item object.
-     *
-     * Return a string representation of the Classes.Item object
-     */
     @Override
     public String toString() {
-        return  "Item_name='" + Item_name + '\'' +
-                ", size='" + size + '\'' +
-                ", sub category='" + sub_category + '\'' +
-                ", category='" + category + '\'' +
-                ", Item_code='" + Item_code + '\'' +
-                ", expiration date='" + expirationDate ;
+        return "   itemCode='" + itemCode + '\'' +
+                ", stored=" + stored +
+                ", expirationDate=" + expirationDate +
+                ", status=" + status;
     }
-
 
     /**
-     * Gets the code of the Classes.Item.
+     * Gets the code of the Item.
      *
-     * Return the code of the Classes.Item
+     * @return the code of the Item
      */
-    public String getItem_code() {
-
-        return Item_code;
+    public String getItemCode() {
+        return itemCode;
     }
 
+    /**
+     * Gets the place stored of the Item.
+     *
+     * @return the place stored of the Item
+     */
     public ItemPlace getStored() {
         return stored;
     }
 
     /**
-     * Gets the category of the Classes.Item.
+     * Updates the place stored of the Item.
      *
-     * Return the category of the Classes.Item
+     * @param newPlace the new place stored
      */
-    public String getCategory() {
-
-        return category;
+    public void setPlace(ItemPlace newPlace) {
+        stored = newPlace;
     }
 
     /**
-     * Gets the sub-category of the Classes.Item.
+     * Checks if the Item is expired.
      *
-     * Return: the sub-category of the Classes.Item
-     */
-    public String getSub_category() {
-
-        return sub_category;
-    }
-
-    /**
-     * Gets the size of the Classes.Item.
-     *
-     * Return: the size of the Classes.Item
-     */
-    public double getSize() {
-
-        return size;
-    }
-
-    /**
-     * update the place of the Classes.Item stored.
-     *
-     */
-    public void set_place(ItemPlace new_place){
-        stored=new_place;
-    }
-    /**
-     * Method to check if the Classes.Item is expired
-     *
+     * @return true if the Item is expired, false otherwise
      */
     public boolean isExpired() {
-        if(LocalDate.now().isAfter(expirationDate)) {
+        if (LocalDate.now().isAfter(expirationDate)) {
             setStatus(ItemStatus.Expired);
             return true;
         }
         return false;
     }
 
+    /**
+     * Sets the status of the Item.
+     *
+     * @param status the status to set
+     */
     public void setStatus(ItemStatus status) {
         this.status = status;
     }
 
-    public String getItem_name() {
-        return Item_name;
-    }
-
-    public double getCostPrice() {
-        return costPrice;
-    }
-
-    public double getSellingPrice() {
-        return sellingPrice;
-    }
 
     public LocalDate getExpirationDate() {
         return expirationDate;
@@ -170,12 +92,7 @@ public class Item {
         return status;
     }
 
-    public void setSellingPrice(double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
-
 }

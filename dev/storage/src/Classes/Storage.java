@@ -1,8 +1,10 @@
 package Classes;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Storage {
@@ -28,41 +30,33 @@ public class Storage {
         return getproduct;
     }
 
-    public void insertItem(Item newItem) {
-        Product existingProduct = null;
+    public void insertProduct(Product new_product) {
+        allProducts.add(new_product);
+    }
+    public void insertItemstoProduct(Product new_product, int quantity,ItemPlace itemplace,LocalDate expirationDate, ItemStatus itemstatus ) {
         for (Product product : allProducts) {
-            if (product.getCategory().equals(newItem.getCategory()) &&
-                    product.getSubCategory().equals(newItem.getSub_category()) &&
-                    product.getSize() == newItem.getSize()&&product.getProductName().equals(newItem.getItem_name()))
+            if (product.getProductCode().equals(new_product.getProductCode()))
             {
-                existingProduct = product;
+                product.addItems(quantity,itemplace,expirationDate,itemstatus);
                 break;
             }
         }
-
-        if (existingProduct != null) {
-            existingProduct.addItem(newItem);
-        } else {
-
-            Product newProduct = new Product(newItem);
-            newProduct.addItem(newItem);
-            allProducts.add(newProduct);
-        }
     }
-     public boolean removeItem(String name_code, ItemStatus status) {
+     public boolean removeItem(String item_code, ItemStatus status) {
         for (Product product : allProducts) {
-            Item item = product.getItems().get(name_code);
+            Item item = product.getItems().get(item_code);
             if (item != null) {
-                product.removeItem(item,status);
+                product.removeItem(item_code,status);
                 return true;
             }
         }
          return false;
      }
-
-    public List<Product> getProductsBySubCategory(String subCategory) {
+    public List<Product> getProductsByFilters(String category, String subCategory, Double size) {
         return allProducts.stream()
-                .filter(product -> product.getSubCategory().equalsIgnoreCase(subCategory))
+                .filter(product -> (category.isEmpty() || product.getCategory().equalsIgnoreCase(category)))
+                .filter(product -> (subCategory.isEmpty() || product.getSubCategory().equalsIgnoreCase(subCategory)))
+                .filter(product -> (size == null || product.getSize() == size))
                 .collect(Collectors.toList());
     }
 
@@ -122,11 +116,6 @@ public class Storage {
         return allProducts;
     }
 
-    public List<Product> getProductsByCategory(String category) {
-        return allProducts.stream()
-                .filter(product -> product.getCategory().equalsIgnoreCase(category))
-                .collect(Collectors.toList());
-    }
 
     public List<Item> getItemsByStatus(ItemStatus status) {
         List<Item> itemsByStatus = new ArrayList<>();
@@ -155,7 +144,7 @@ public class Storage {
     public Item getItemByCode(String itemCode) {
         for (Product product : allProducts) {
             for (Item item : product.getItems().values()) {
-                if (item.getItem_code().equals(itemCode)) {
+                if (item.getItemCode().equals(itemCode)) {
                     return item;
                 }
             }
@@ -175,23 +164,10 @@ public class Storage {
         return allProducts.stream().mapToInt(Product::getQuantityInWarehouse).sum();
     }
 
-   /* public int getItemsTotalAmount() {
-        return allProducts.stream().mapToInt(Product::getTotalQuantity).sum();
-    }
-
-    public int getItemsTotalAmountInStore() {
-        return allProducts.stream().mapToInt(Product::getQuantityInStore).sum();
-    }
-
-    public int getItemsTotalAmountInWarehouse() {
-        return allProducts.stream().mapToInt(Product::getQuantityInWarehouse).sum();
-    }
-
-    */
     public void setMinimumQuantityForProduct(String productName, int minimumQuantity) {
         Product product = getProductByName(productName);
         if (product != null) {
-            product.set_minimum(minimumQuantity);
+            product.setMinimum(minimumQuantity);
         } else {
             System.out.println("Product not found.");
         }
