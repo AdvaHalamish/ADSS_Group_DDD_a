@@ -5,21 +5,19 @@
 - Shani Zilberberg 207106824
 - Ido Badash 206917510
 
-### Instructions for Running the Code:
+# Store Management System
+
+## Introduction
+This project is a simple store management system implemented in Java using SQLite as the database engine. The system allows storekeepers to insert new products, update item statuses, and maintain product and item information.
+
+## Requirements
+- Java JDK 8 or higher
+- SQLite JDBC driver (included in the `lib` directory)
+
+## Setup Instructions
 1. Clone the repository to your local machine.
-2. Install the necessary dependencies (listed in pom.xml or requirements.txt, etc.).
-3. Run the main application file (e.g., Main.java, app.py, etc.).
-4. Follow the on-screen prompts or use the command-line interface for interaction.
-
-### Tools and Libraries Used:
-- Database Engine: SQLite
-- Testing Framework: JUnit
-- Build Tool: Maven
-
-### Database Schema:
-- Supplier: Contains information about suppliers, including their IDs, names, and contact details.
-- Product: Stores data about products, such as IDs, names, categories, and prices.
-- Employee: Represents employees with their IDs, names, roles, and availability.
-- Shift: Tracks information about shifts, including IDs, start and end times, and assigned employees.
-- Inventory: Manages inventory items, including their IDs, names, quantities, and statuses.
-
+2. Ensure you have Java JDK installed.
+3. Navigate to the project directory.
+4. Compile the Java code using the following command:
+   ```sh
+   javac -cp .:lib/sqlite-jdbc-3.36.0.3.jar $(find . -name "*.java")
