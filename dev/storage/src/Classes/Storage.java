@@ -56,7 +56,7 @@ public class Storage {
         return allProducts.stream()
                 .filter(product -> (category.isEmpty() || product.getCategory().equalsIgnoreCase(category)))
                 .filter(product -> (subCategory.isEmpty() || product.getSubCategory().equalsIgnoreCase(subCategory)))
-                .filter(product -> (size == null || product.getSize() == size))
+                .filter(product -> (size==0 || product.getSize().equals(size)))
                 .collect(Collectors.toList());
     }
 
