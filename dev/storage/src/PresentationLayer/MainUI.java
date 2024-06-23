@@ -1,12 +1,12 @@
-package Menus;
+package PresentationLayer;
 
-import Classes.Storage;
-import Utils.Database;
+import BuisnessLayer.Storage;
+import DataAccessLayer.Database;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class MainUI {
     private static Storage storage;
 
     public static void main(String[] args) {
@@ -34,16 +34,16 @@ public class Main {
             }
             switch (choice) {
                 case 1:
-                    StorekeeperMenu storekeeperMenu = new StorekeeperMenu(storage);
-                    storekeeperMenu.displayMenu(scanner);
+                    StorekeeperUI storekeeperUI = new StorekeeperUI(storage);
+                    storekeeperUI.displayMenu(scanner);
                     break;
                 case 2:
-                    ManagementMenu departmentMenu = new ManagementMenu(storage);
+                    ManagementUI departmentMenu = new ManagementUI(storage);
                     departmentMenu.displayMenu(scanner);
                     break;
                 case 3:
-                    UserMenu userMenu = new UserMenu(storage);
-                    userMenu.displayMenu(scanner);
+                    UserUI userUI = new UserUI(storage);
+                    userUI.displayMenu(scanner);
                     break;
                 case 4:
                     System.out.println("Exiting Main Menu...");

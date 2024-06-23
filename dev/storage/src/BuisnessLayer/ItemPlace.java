@@ -1,4 +1,4 @@
-package Classes;
+package BuisnessLayer;
 
 public enum ItemPlace{
     Store,

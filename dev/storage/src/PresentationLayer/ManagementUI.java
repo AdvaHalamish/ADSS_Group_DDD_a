@@ -1,16 +1,16 @@
-package Menus;
+package PresentationLayer;
 
-import Classes.*;
+import BuisnessLayer.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ManagementMenu {
+public class ManagementUI {
     private static Storage storage;
 
-    public ManagementMenu(Storage storage) {
+    public ManagementUI(Storage storage) {
         this.storage = storage;
     }
 

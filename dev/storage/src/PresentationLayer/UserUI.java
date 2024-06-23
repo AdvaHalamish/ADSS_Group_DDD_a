@@ -1,17 +1,17 @@
-package Menus;
+package PresentationLayer;
 
-import Classes.Item;
-import Classes.ItemStatus;
-import Classes.Product;
-import Classes.Storage;
+import BuisnessLayer.Item;
+import BuisnessLayer.ItemStatus;
+import BuisnessLayer.Product;
+import BuisnessLayer.Storage;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UserMenu {
+public class UserUI {
     private static Storage storage;
 
-    public UserMenu(Storage storage) {
+    public UserUI(Storage storage) {
         this.storage = storage;
     }
 

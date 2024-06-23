@@ -1,18 +1,18 @@
-package Menus;
+package PresentationLayer;
 
-import Classes.ItemPlace;
-import Classes.ItemStatus;
-import Classes.Product;
-import Classes.Storage;
+import BuisnessLayer.ItemPlace;
+import BuisnessLayer.ItemStatus;
+import BuisnessLayer.Product;
+import BuisnessLayer.Storage;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class StorekeeperMenu {
+public class StorekeeperUI {
     private Storage storage;
 
-    public StorekeeperMenu(Storage storage) {
+    public StorekeeperUI(Storage storage) {
         this.storage = storage;
     }
 
