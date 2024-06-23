@@ -42,7 +42,7 @@ public class Storage {
             }
         }
     }
-     public boolean removeItem(String item_code, ItemStatus status) {
+     public boolean updateItemStatus(String item_code, ItemStatus status) {
         for (Product product : allProducts) {
             Item item = product.getItems().get(item_code);
             if (item != null) {
