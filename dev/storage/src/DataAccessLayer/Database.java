@@ -1,55 +1,55 @@
 package DataAccessLayer;
 
-import BuisnessLayer.*;
-
-import java.time.LocalDate;
-
-public class Database {
-    private static Storage storage;
-
-    private static void initializeData() {
-        storage = new Storage();
-
-        // Create and insert products
-        Product apple = new Product("Apple Inc.", "Fruits", "Apple", "Fresh", "A001", 1.0, 2.0, 10, 5, ItemPlace.Store, LocalDate.now().minusDays(1));
-        Product banana = new Product("Fruit Co.", "Fruits", "Banana", "Fresh", "B002", 1.0, 3.0, 20, 5, ItemPlace.Warehouse, LocalDate.now().plusDays(10));
-        Product milk = new Product("Dairy Farms", "Dairy", "Milk", "Milk", "M003", 1.0, 4.0, 30, 5, ItemPlace.Store, LocalDate.now().plusDays(5));
-        Product cheese = new Product("Dairy Farms", "Dairy", "Cheese", "Cheese", "C004", 1.0, 5.0, 25, 5, ItemPlace.Store, LocalDate.now().plusDays(6));
-        Product yogurt = new Product("Dairy Farms", "Dairy", "Yogurt", "Yogurt", "Y005", 1.0, 3.0, 15, 5, ItemPlace.Store, LocalDate.now().plusDays(3));
-        Product bread = new Product("Bakery Co.", "Bakery", "Bread", "Bread", "B006", 1.0, 2.0, 20, 5, ItemPlace.Store, LocalDate.now().plusDays(5));
-
-        // Insert products into storage
-        storage.insertProduct(apple);
-        storage.insertProduct(banana);
-        storage.insertProduct(milk);
-        storage.insertProduct(cheese);
-        storage.insertProduct(yogurt);
-        storage.insertProduct(bread);
-    }
-
-    // Method to get the storage
-    public static Storage getStorage() {
-        initializeData();
-        return storage;
-    }
-}/*
-package DataAccessLayer;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Database {
-    private static final String DB_URL = "jdbc:sqlite:identifier.sqlite";
+    private static final String URL = "jdbc:sqlite:identifier.sqlite";
 
     public static Connection connect() throws SQLException {
-        return DriverManager.getConnection(DB_URL);
+        return DriverManager.getConnection(URL);
     }
-    public static void closeConnection(Connection connection) {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
+
+    public static void initializeDatabase() {
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()) {
+            String createProductsTable = "CREATE TABLE IF NOT EXISTS products (\n"
+                    + " product_code TEXT PRIMARY KEY,\n"
+                    + " manufacturer TEXT NOT NULL,\n"
+                    + " category TEXT NOT NULL,\n"
+                    + " product_name TEXT NOT NULL,\n"
+                    + " sub_category TEXT NOT NULL,\n"
+                    + " purchase_price REAL NOT NULL,\n"
+                    + " selling_price REAL NOT NULL,\n"
+                    + " min_quantity INTEGER NOT NULL,\n"
+                    + " quantity_in_store INTEGER NOT NULL,\n"
+                    + " item_place TEXT NOT NULL,\n"
+                    + " expiration_date TEXT NOT NULL\n"
+                    + ");";
+
+            String createItemsTable = "CREATE TABLE IF NOT EXISTS items (\n"
+                    + " item_code TEXT PRIMARY KEY,\n"
+                    + " product_code TEXT NOT NULL,\n"
+                    + " status TEXT NOT NULL,\n"
+                    + " FOREIGN KEY (product_code) REFERENCES products (product_code)\n"
+                    + ");";
+
+            stmt.execute(createProductsTable);
+            stmt.execute(createItemsTable);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
+    public static Connection getConnection() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(URL);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Failed to connect to the database");
+        }
+        return connection;
+    }
 }
- */

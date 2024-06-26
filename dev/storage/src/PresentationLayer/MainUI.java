@@ -2,14 +2,21 @@ package PresentationLayer;
 
 import BuisnessLayer.Storage;
 import DataAccessLayer.Database;
+import DataAccessLayer.ItemDAO;
+import DataAccessLayer.ProductDAO;
+import BuisnessLayer.ManagementController;
+import BuisnessLayer.StorageController;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainUI {
     private static Storage storage;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
 
@@ -54,7 +61,7 @@ public class MainUI {
         } while (choice != 4);
     }
 
-    private static void chooseStorageType(Scanner scanner) {
+    private static void chooseStorageType(Scanner scanner) throws SQLException {
         int storageChoice = 0;
         do {
             System.out.println("\nChoose Storage Type");
@@ -84,11 +91,17 @@ public class MainUI {
         } while (storageChoice < 1 || storageChoice > 2);
     }
 
-    private static void initializeEmptyStorage() {
-        storage = new Storage();
+    private static void initializeEmptyStorage() throws SQLException {
+        ProductDAO productDAO = new ProductDAO(Database.getConnection());
+        ItemDAO itemDAO = new ItemDAO(Database.getConnection());
+        StorageController StorageController = new StorageController(productDAO, itemDAO);
+        ManagementController ManagementController = new ManagementController(productDAO, itemDAO);
     }
 
-    private static void initializeDatabaseStorage() {
-        storage = Database.getStorage();
-    }
+        private static void initializeDatabaseStorage() throws SQLException {
+            ProductDAO productDAO = new ProductDAO(Database.getConnection());
+            ItemDAO itemDAO = new ItemDAO(Database.getConnection());
+            StorageController StorageController = new StorageController(productDAO, itemDAO);
+            ManagementController ManagementController = new ManagementController(productDAO, itemDAO);
+        }
 }

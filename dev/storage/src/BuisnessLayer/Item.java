@@ -95,4 +95,11 @@ public class Item {
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    public ItemPlace getItemPlace() {
+        return stored;
+    }
+
+    public ItemStatus getItemStatus() {
+    return status;}
 }

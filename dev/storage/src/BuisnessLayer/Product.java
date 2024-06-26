@@ -173,4 +173,16 @@ public class Product {
     public Double getSize() {
         return size;
     }
+
+    public int getMinQuantity() {
+        return minimumQuantityForAlert;
+    }
+
+    public double getPurchasePrice() {
+        return sellingPrice;
+    }
+
+    public void setProductId(String productId) {
+        this.productCode = productId;
+    }
 }
